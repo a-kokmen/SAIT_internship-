@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.neovisionaries:nv-websocket-client:2.5'
+    compile 'de.vandermeer:asciitable:0.3.2'
+    compile 'org.json:json:20180813'
+}
+
+jar {
+  manifest {
+    attributes(
+      "Class-Path": configurations.compile.collect { it.getName() }.join(' '),
+      "Main-Class": "com.sait.cst.logging.Application"
+    )
+  }
+  
+  from {
+  	configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+mainClassName = 'com.sait.cst.logging.Application'
